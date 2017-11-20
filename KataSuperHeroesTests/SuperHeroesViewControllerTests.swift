@@ -95,6 +95,16 @@ class SuperHeroesViewControllerTests: AcceptanceTestCase {
         tester().waitForView(withAccessibilityLabel: "LoadingView")
     }
     
+    // Test Push view Controller
+    func testSuperHeroDetailViewControllerIsCalledWhenTapACell(){
+        _ = givenThereAreSomeSuperHeroes(numberOfSuperHeroes)
+        
+        openSuperHeroesViewController()
+        
+        tester().tapView(withAccessibilityLabel: "SuperHero - \(0)")
+        tester().waitForView(withAccessibilityLabel: "SuperHero - \(0)", traits: UIAccessibilityTraitHeader)
+    }
+    
     fileprivate func testerCellSuperHeroes(index: Int){
         tester().waitForCell(at: IndexPath.init(row: index, section: 0), inTableViewWithAccessibilityIdentifier: "SuperHeroesTableView")
         //Here we can acces to Cell and check all of properties
