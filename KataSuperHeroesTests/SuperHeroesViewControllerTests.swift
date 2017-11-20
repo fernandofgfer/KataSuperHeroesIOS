@@ -52,7 +52,7 @@ class SuperHeroesViewControllerTests: AcceptanceTestCase {
         tester().waitForAbsenceOfView(withAccessibilityLabel: "SuperHero - \(20)")
     }
     
-    //Slow test -> Must refect
+    //Slow test -> Must refact
     func testSuperHeroes20AppearOnScreenWillBePainted(){
         _ = givenThereAreSomeSuperHeroes(20)
         
@@ -72,14 +72,9 @@ class SuperHeroesViewControllerTests: AcceptanceTestCase {
         for i in 0..<numberOfSuperHeroes {
             tester().waitForView(withAccessibilityLabel: "SuperHero - \(i) - Avengers Badge")
         }
-        
-        
-//        let cell = tester().waitForCell(at: IndexPath.init(row: 0, section: 0), inTableViewWithAccessibilityIdentifier: "SuperHeroesTableView") as? SuperHeroTableViewCell
-//
-//        expect(cell?.avengersBadgeImageView.accessibilityLabel).to(equal("SuperHero - \(i) - Avengers Badge"))
     }
     
-    
+    // test if loading view appear
     
     fileprivate func testerCellSuperHeroes(index: Int){
         tester().waitForCell(at: IndexPath.init(row: index, section: 0), inTableViewWithAccessibilityIdentifier: "SuperHeroesTableView")
