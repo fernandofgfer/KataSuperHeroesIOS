@@ -15,6 +15,7 @@ import UIKit
 class SuperHeroesViewControllerTests: AcceptanceTestCase {
 
     fileprivate let repository = MockSuperHeroesRepository()
+    //fileprivate let repository = MockSuperHeroesRepositoryWithDelay()
     let numberOfSuperHeroes = 5
     
     
@@ -74,7 +75,25 @@ class SuperHeroesViewControllerTests: AcceptanceTestCase {
         }
     }
     
+    func testShowSuperHeroesNotAvengerIfSymbolIsNotPainted(){
+        _ = givenThereAreSomeSuperHeroes(numberOfSuperHeroes)
+        
+        openSuperHeroesViewController()
+        
+        for i in 0..<numberOfSuperHeroes {
+            tester().waitForAbsenceOfView(withAccessibilityLabel: "SuperHero - \(i) - Avengers Badge")
+        }
+    }
+    
     // test if loading view appear
+    func testShowSuperHeroesAndLoaderAppear(){
+        _ = givenThereAreSomeSuperHeroes(20)
+        repository.isInfinite = true
+        
+        openSuperHeroesViewController()
+        
+        tester().waitForView(withAccessibilityLabel: "LoadingView")
+    }
     
     fileprivate func testerCellSuperHeroes(index: Int){
         tester().waitForCell(at: IndexPath.init(row: index, section: 0), inTableViewWithAccessibilityIdentifier: "SuperHeroesTableView")
@@ -109,4 +128,25 @@ class SuperHeroesViewControllerTests: AcceptanceTestCase {
         present(viewController: rootViewController)
         tester().waitForAnimationsToFinish()
     }
+    
+//    // Bad solution, but works
+//    fileprivate func openSuperHeroesViewControllerWithPresenterStub() {
+//        let superHeroesViewController = ServiceLocator()
+//            .provideSuperHeroesViewController() as! SuperHeroesViewController
+//        superHeroesViewController.presenter = SuperHeroesPresenterStub(ui: superHeroesViewController,
+//                                                                   getSuperHeroes: GetSuperHeroes(repository: repository))
+//        let rootViewController = UINavigationController()
+//        rootViewController.viewControllers = [superHeroesViewController]
+//        present(viewController: rootViewController)
+//        tester().waitForAnimationsToFinish()
+//    }
 }
+
+
+//// Bad solution, but works
+//class SuperHeroesPresenterStub: SuperHeroesPresenter{
+//    override func viewDidLoad() {
+//        ui?.showLoader()
+//    }
+//}
+

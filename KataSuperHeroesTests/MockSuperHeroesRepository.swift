@@ -12,8 +12,12 @@ import Foundation
 class MockSuperHeroesRepository: SuperHeroesRepository {
 
     var superHeroes = [SuperHero]()
-
+    var isInfinite = false
+    
     override func getAll(_ completion: @escaping ([SuperHero]) -> ()) {
+        if isInfinite{
+            return
+        }
         completion(superHeroes)
     }
 
@@ -23,3 +27,20 @@ class MockSuperHeroesRepository: SuperHeroesRepository {
     }
 
 }
+
+
+//class MockSuperHeroesRepositoryWithDelay: SuperHeroesRepository{
+//    var superHeroes = [SuperHero]()
+//    
+//    override func getAll(_ completion: @escaping ([SuperHero]) -> ()) {
+//        delay(10){
+//            completion(self.superHeroes)
+//        }
+//    }
+//    
+//    override func getSuperHero(withName name: String, completion: @escaping (SuperHero?) -> ()) {
+//        let superHeroByName = superHeroes.filter { $0.name == name }.first
+//        completion(superHeroByName)
+//    }
+//}
+
