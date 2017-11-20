@@ -59,12 +59,18 @@ class SuperHeroesViewControllerTests: AcceptanceTestCase {
         openSuperHeroesViewController()
         
         for i in 0..<20 {
-            tester().waitForCell(at: IndexPath.init(row: i, section: 0), inTableViewWithAccessibilityIdentifier: "SuperHeroesTableView")
-            //Here we can acces to Cell and check all of properties
-            tester().waitForView(withAccessibilityLabel: "SuperHero - \(i)")
+            testerCellSuperHeroes(index: i)
         }
     }
     
+    // Check avenger symbol
+    
+    
+    fileprivate func testerCellSuperHeroes(index: Int){
+        tester().waitForCell(at: IndexPath.init(row: index, section: 0), inTableViewWithAccessibilityIdentifier: "SuperHeroesTableView")
+        //Here we can acces to Cell and check all of properties
+        tester().waitForView(withAccessibilityLabel: "SuperHero - \(index)")
+    }
     
     fileprivate func givenThereAreNoSuperHeroes() {
         _ = givenThereAreSomeSuperHeroes(0)
