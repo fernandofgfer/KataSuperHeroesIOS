@@ -39,9 +39,9 @@ class SuperHeroesViewControllerTests: AcceptanceTestCase {
         
         openSuperHeroesViewController()
         
-        tester().waitForView(withAccessibilityLabel: "SuperHero - \(0)")
-        tester().waitForView(withAccessibilityLabel: "SuperHero - \(1)")
-        tester().waitForView(withAccessibilityLabel: "SuperHero - \(2)")
+        for i in 0..<numberOfSuperHeroes {
+            tester().waitForView(withAccessibilityLabel: "SuperHero - \(i)")
+        }
     }
     
     func testShowsListOfSuperHeroesThatSomeoneIsOutOfScreen(){
@@ -64,6 +64,21 @@ class SuperHeroesViewControllerTests: AcceptanceTestCase {
     }
     
     // Check avenger symbol
+    func testShowSuperHeroesAvengersIfSymbolIsPainted(){
+        _ = givenThereAreSomeSuperHeroes(numberOfSuperHeroes, avengers: true)
+        
+        openSuperHeroesViewController()
+        
+        for i in 0..<numberOfSuperHeroes {
+            tester().waitForView(withAccessibilityLabel: "SuperHero - \(i) - Avengers Badge")
+        }
+        
+        
+//        let cell = tester().waitForCell(at: IndexPath.init(row: 0, section: 0), inTableViewWithAccessibilityIdentifier: "SuperHeroesTableView") as? SuperHeroTableViewCell
+//
+//        expect(cell?.avengersBadgeImageView.accessibilityLabel).to(equal("SuperHero - \(i) - Avengers Badge"))
+    }
+    
     
     
     fileprivate func testerCellSuperHeroes(index: Int){
