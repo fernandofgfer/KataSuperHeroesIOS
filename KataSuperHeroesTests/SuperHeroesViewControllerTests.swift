@@ -15,7 +15,9 @@ import UIKit
 class SuperHeroesViewControllerTests: AcceptanceTestCase {
 
     fileprivate let repository = MockSuperHeroesRepository()
-
+    let numberOfSuperHeroes = 5
+    
+    
     func testShowsEmptyCaseIfThereAreNoSuperHeroes() {
         givenThereAreNoSuperHeroes()
 
@@ -32,7 +34,38 @@ class SuperHeroesViewControllerTests: AcceptanceTestCase {
         tester().waitForAbsenceOfView(withAccessibilityLabel: "¯\\_(ツ)_/¯")
     }
     
+    func testShowsListOfSuperHeroesOnScreen(){
+        _ = givenThereAreSomeSuperHeroes(numberOfSuperHeroes)
+        
+        openSuperHeroesViewController()
+        
+        tester().waitForView(withAccessibilityLabel: "SuperHero - \(0)")
+        tester().waitForView(withAccessibilityLabel: "SuperHero - \(1)")
+        tester().waitForView(withAccessibilityLabel: "SuperHero - \(2)")
+    }
+    
+    func testShowsListOfSuperHeroesThatSomeoneIsOutOfScreen(){
+        _ = givenThereAreSomeSuperHeroes(20)
+        
+        openSuperHeroesViewController()
 
+        tester().waitForAbsenceOfView(withAccessibilityLabel: "SuperHero - \(20)")
+    }
+    
+    //Slow test -> Must refect
+    func testSuperHeroes20AppearOnScreenWillBePainted(){
+        _ = givenThereAreSomeSuperHeroes(20)
+        
+        openSuperHeroesViewController()
+        
+        for i in 0..<20 {
+            tester().waitForCell(at: IndexPath.init(row: i, section: 0), inTableViewWithAccessibilityIdentifier: "SuperHeroesTableView")
+            //Here we can acces to Cell and check all of properties
+            tester().waitForView(withAccessibilityLabel: "SuperHero - \(i)")
+        }
+    }
+    
+    
     fileprivate func givenThereAreNoSuperHeroes() {
         _ = givenThereAreSomeSuperHeroes(0)
     }
