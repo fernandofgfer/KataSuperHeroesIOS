@@ -22,6 +22,9 @@ class MockSuperHeroesRepository: SuperHeroesRepository {
     }
 
     override func getSuperHero(withName name: String, completion: @escaping (SuperHero?) -> ()) {
+        if isInfinite{
+            return
+        }
         let superHeroByName = superHeroes.filter { $0.name == name }.first
         completion(superHeroByName)
     }
