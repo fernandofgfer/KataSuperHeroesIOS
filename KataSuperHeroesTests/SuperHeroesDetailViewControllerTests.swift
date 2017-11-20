@@ -34,6 +34,53 @@ class SuperHeroesDetailViewControllerTests: AcceptanceTestCase {
         tester().waitForView(withAccessibilityLabel: "LoadingView")
     }
     
+    func testShowSuperHeroNameIsSuperHeroName(){
+        getASuperHero(name: superHeroName)
+        
+        openSuperHeroDetailViewController(name: superHeroName)
+        
+        tester().waitForView(withAccessibilityLabel: "Name: \(superHeroName)")
+    }
+    
+    func testShowSuperHeroNameIsNotAnotherSuperHeroName(){
+        getASuperHero(name: superHeroName)
+        
+        openSuperHeroDetailViewController(name: superHeroName)
+        
+        tester().waitForAbsenceOfView(withAccessibilityLabel: "Name Test2")
+    }
+    
+    func testShowSuperHeroDetailIsSuperHeroDetail(){
+        getASuperHero(name: superHeroName)
+        
+        openSuperHeroDetailViewController(name: superHeroName)
+        
+        tester().waitForView(withAccessibilityLabel: "Description: \(superHeroName)")
+    }
+    
+    func testShowSuperHeroDetailIsNotAnotherSuperHeroDetail(){
+        getASuperHero(name: superHeroName)
+        
+        openSuperHeroDetailViewController(name: superHeroName)
+        
+        tester().waitForAbsenceOfView(withAccessibilityLabel: "Description: Test2")
+    }
+    
+    func testShowSuperHeroBadgeAvengerShowedWhenIsAvenger(){
+        getASuperHero(name: superHeroName, avengers: true)
+        
+        openSuperHeroDetailViewController(name: superHeroName)
+        
+        tester().waitForView(withAccessibilityLabel: "Avengers Badge")
+    }
+    
+    func testShowSuperHeroNotBadgeAvengerNotShowedAvengerSymbol(){
+        getASuperHero(name: superHeroName)
+        
+        openSuperHeroDetailViewController(name: superHeroName)
+        
+        tester().waitForAbsenceOfView(withAccessibilityLabel: "Avengers Badge")
+    }
     
     fileprivate func getASuperHero(name: String, avengers: Bool = false){
         var superHeroes = [SuperHero]()
